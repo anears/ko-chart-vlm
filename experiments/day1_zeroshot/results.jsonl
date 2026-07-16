@@ -1,0 +1,16 @@
+{"id": "01-q1", "image": "data/day1_charts/01_bar_simple.png", "question": "2023년 매출은 몇 억 원인가요?", "answer_gt": "180억 원", "note": "숫자 180", "prediction": "180억 원", "latency_sec": 12.74}
+{"id": "01-q2", "image": "data/day1_charts/01_bar_simple.png", "question": "매출이 가장 컸던 해는 언제인가요?", "answer_gt": "2024년", "note": "2024", "prediction": "2024년", "latency_sec": 0.27}
+{"id": "02-q1", "image": "data/day1_charts/02_bar_grouped.png", "question": "3분기 온라인 판매량은 몇 천 대인가요?", "answer_gt": "45천 대 (4만 5천 대)", "note": "숫자 45", "prediction": "45천 대", "latency_sec": 0.24}
+{"id": "02-q2", "image": "data/day1_charts/02_bar_grouped.png", "question": "온라인 판매량이 오프라인을 처음으로 앞선 분기는 언제인가요?", "answer_gt": "2분기", "note": "2분기(36>35)", "prediction": "3분기", "latency_sec": 0.21}
+{"id": "03-q1", "image": "data/day1_charts/03_line_multi.png", "question": "5월 부산의 평균 기온은 몇 도인가요?", "answer_gt": "18°C", "note": "부산 시리즈의 5월 값 18", "prediction": "18°C", "latency_sec": 0.22}
+{"id": "03-q2", "image": "data/day1_charts/03_line_multi.png", "question": "1월에 가장 따뜻한 도시는 어디인가요?", "answer_gt": "제주", "note": "제주(6°C)", "prediction": "제주", "latency_sec": 0.19}
+{"id": "04-q1", "image": "data/day1_charts/04_pie.png", "question": "점유율이 가장 높은 회사와 그 비율은?", "answer_gt": "A전자, 34%", "note": "A전자 34%", "prediction": "A전자, 34%", "latency_sec": 0.37}
+{"id": "04-q2", "image": "data/day1_charts/04_pie.png", "question": "B모바일과 C테크의 점유율을 합치면 몇 %인가요?", "answer_gt": "45%", "note": "27+18=45", "prediction": "45%", "latency_sec": 0.23}
+{"id": "05-q1", "image": "data/day1_charts/05_bar_stacked.png", "question": "2022년 수출과 내수를 합친 전체 매출은 몇 조 원인가요?", "answer_gt": "24조 원", "note": "15+9=24", "prediction": "24 조 원", "latency_sec": 0.2}
+{"id": "05-q2", "image": "data/day1_charts/05_bar_stacked.png", "question": "내수 매출이 가장 컸던 해는 언제인가요?", "answer_gt": "2023년", "note": "내수 11조", "prediction": "2023년", "latency_sec": 0.24}
+{"id": "06-q1", "image": "data/day1_charts/06_dual_axis.png", "question": "영업이익률이 가장 높았던 해는 언제인가요?", "answer_gt": "2023년 (12.4%)", "note": "매출 최고인 2024와 혼동 유도", "prediction": "2023년", "latency_sec": 0.25}
+{"id": "06-q2", "image": "data/day1_charts/06_dual_axis.png", "question": "2022년 매출은 몇 억 원인가요?", "answer_gt": "1,010억 원", "note": "1010", "prediction": "1010억 원", "latency_sec": 0.26}
+{"id": "07-q1", "image": "data/day1_charts/07_units_krw.png", "question": "연구개발 부문 예산은 몇 억 원인가요?", "answer_gt": "8,500억 원", "note": "0.85조 → 억 환산", "prediction": "850억 원", "latency_sec": 0.22}
+{"id": "07-q2", "image": "data/day1_charts/07_units_krw.png", "question": "네 부문 예산의 총합은 몇 조 원인가요?", "answer_gt": "2.98조 원", "note": "1.2+0.85+0.62+0.31", "prediction": "3.03조 원입니다.", "latency_sec": 0.28}
+{"id": "08-q1", "image": "data/day1_charts/08_bar_dense.png", "question": "울산의 인구는 약 몇 만 명인가요?", "answer_gt": "약 110만 명", "note": "값 라벨 없음, ±15 허용", "prediction": "약 100만 명", "latency_sec": 0.28}
+{"id": "08-q2", "image": "data/day1_charts/08_bar_dense.png", "question": "인구가 세 번째로 많은 시도는 어디인가요?", "answer_gt": "부산", "note": "경기>서울>부산 순", "prediction": "대구", "latency_sec": 0.17}

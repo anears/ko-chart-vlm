@@ -1,0 +1,12 @@
+{
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "dtype": "bfloat16",
+  "decoding": "greedy, max_new_tokens=96",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "peak_vram_gb": 16.57,
+  "model_load_sec": 199.0,
+  "torch": "2.12.1+cu126",
+  "transformers": "5.14.0",
+  "n_questions": 16,
+  "date": "2026-07-16 18:34:18"
+}

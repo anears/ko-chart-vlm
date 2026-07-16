@@ -12,11 +12,13 @@ dependencies = [
     "qwen-vl-utils>=0.0.14",
     # 서버 드라이버 535(CUDA 12.2) 호환을 위해 cu126 빌드 고정 — 최신 cu13x 빌드는 구동 불가
     "torch>=2.7,<2.13",
+    "torchvision",
     "transformers>=5.14.0",
 ]
 
 [tool.uv.sources]
 torch = { index = "pytorch-cu126" }
+torchvision = { index = "pytorch-cu126" }
 
 [[tool.uv.index]]
 name = "pytorch-cu126"

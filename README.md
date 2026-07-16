@@ -46,7 +46,7 @@ CUDA_VISIBLE_DEVICES=1 uv run scripts/run_zeroshot.py \
 
 | 날짜 | 실험 | 요약 |
 |---|---|---|
-| 2026-07-16 | [day1_zeroshot](experiments/day1_zeroshot/) | Qwen3-VL 한국어 차트 zero-shot 진단 |
+| 2026-07-16 | [day1_zeroshot](experiments/day1_zeroshot/) | Qwen3-VL-8B 한국어 차트 16문항 zero-shot — **strict 75%**. 약점 3종 발견: 조→억 단위 환산(10배 오류), 라벨 없는 차트 정밀 판독·순위, 근소 차이 비교 |
 
 ## 환경
 
