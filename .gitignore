@@ -1,0 +1,17 @@
+# python / uv
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# claude local settings
+.claude/
+
+# 대용량 아티팩트 (모델 가중치는 HF 캐시에만 둔다)
+*.safetensors
+*.gguf
+wandb/
+outputs/
+
+# os
+.DS_Store

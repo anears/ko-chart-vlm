@@ -1,0 +1,24 @@
+[project]
+name = "vlm-lab"
+version = "0.1.0"
+description = "한국어 차트 이해 VLM — 7일 사이드 프로젝트"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "accelerate>=1.14.0",
+    "hf-transfer>=0.1.9",
+    "matplotlib>=3.11.0",
+    "pillow>=12.3.0",
+    "qwen-vl-utils>=0.0.14",
+    # 서버 드라이버 535(CUDA 12.2) 호환을 위해 cu126 빌드 고정 — 최신 cu13x 빌드는 구동 불가
+    "torch>=2.7,<2.13",
+    "transformers>=5.14.0",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu126" }
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
