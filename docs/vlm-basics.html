@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VLM 기초 — 이 프로젝트에 필요한 만큼만</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2328; --muted: #57606a;
+    --border: #d0d7de; --accent: #0969da; --callout-bg: #ddf4ff;
+    --code-bg: #f6f8fa; --box-bg: #f6f8fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1;
+      --border: #30363d; --accent: #4493f8; --callout-bg: #121d2f;
+      --code-bg: #161b22; --box-bg: #161b22;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto; padding: 2.5rem 1.25rem 5rem; max-width: 780px;
+    background: var(--bg); color: var(--fg); line-height: 1.7;
+    font-family: -apple-system, "Apple SD Gothic Neo", "Malgun Gothic",
+                 "Noto Sans KR", "Segoe UI", sans-serif;
+    word-break: keep-all;
+  }
+  h1 { font-size: 1.7rem; border-bottom: 1px solid var(--border); padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; margin-top: 2.2rem; }
+  p.lead { color: var(--muted); }
+  strong { color: var(--accent); }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--border); padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); }
+  code {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: .1em .35em; font-size: .88em;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  }
+  .callout {
+    background: var(--callout-bg); border-left: 4px solid var(--accent);
+    border-radius: 6px; padding: .8rem 1rem; margin: 1.2rem 0;
+  }
+  /* 파이프라인 다이어그램 */
+  .pipeline { display: flex; flex-wrap: wrap; align-items: stretch; gap: .4rem; margin: 1.2rem 0; }
+  .stage {
+    flex: 1 1 130px; background: var(--box-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: .6rem .7rem; text-align: center; min-width: 120px;
+  }
+  .stage b { display: block; margin-bottom: .2rem; }
+  .stage small { color: var(--muted); }
+  .arrow { align-self: center; color: var(--muted); font-weight: bold; }
+  dl dt { font-weight: 700; margin-top: .9rem; }
+  dl dd { margin: .15rem 0 0 0; color: var(--muted); }
+  .num { font-feature-settings: "tnum"; }
+</style>
+</head>
+<body>
+
+<h1>VLM 기초 — 이 프로젝트에 필요한 만큼만</h1>
+<p class="lead">ko-chart-vlm 프로젝트를 진행하는 데 필요한 최소한의 Vision-Language Model 개념 정리.</p>
+
+<h2>VLM이 뭔가</h2>
+<p>
+Vision-Language Model = <strong>이미지(+텍스트)를 입력받아 텍스트를 출력하는 LLM</strong>.
+본질은 "LLM이 이미지 토큰도 읽을 수 있게 확장한 것"이다. 이미지를 별도의 분류기로 처리하는 게 아니라,
+이미지를 토큰 시퀀스로 바꿔 텍스트 토큰과 <strong>한 줄로 이어붙여</strong> LLM에 넣는다.
+</p>
+
+<h2>구조 — 최신 오픈 VLM은 거의 전부 이 3단 구성</h2>
+<div class="pipeline">
+  <div class="stage"><b>이미지</b><small>픽셀</small></div>
+  <div class="arrow">→</div>
+  <div class="stage"><b>① Vision Encoder</b><small>ViT — 패치를 벡터로</small></div>
+  <div class="arrow">→</div>
+  <div class="stage"><b>② Projector</b><small>MLP — LLM 공간으로 변환</small></div>
+  <div class="arrow">→</div>
+  <div class="stage"><b>③ LLM</b><small>이미지 토큰 + 질문 토큰 → 답변 생성</small></div>
+</div>
+<ol>
+  <li><b>Vision Encoder</b>: 이미지를 패치(예: 14×14px 조각)로 잘라 패치마다 벡터 하나씩 만든다. 보통 CLIP/SigLIP 계열 ViT.</li>
+  <li><b>Projector</b>: 비전 벡터를 LLM의 임베딩 공간으로 변환하는 작은 MLP. (LLaVA의 핵심 발견 — 이 단순한 연결로 충분하다)</li>
+  <li><b>LLM</b>: 이미지 토큰을 마치 외국어 단어처럼 취급하며 평소처럼 다음 토큰을 생성한다.</li>
+</ol>
+
+<h2>계보 — 한 줄씩만</h2>
+<table>
+  <tr><th>모델</th><th>기여</th></tr>
+  <tr><td class="num">CLIP (2021)</td><td>이미지·텍스트를 같은 벡터 공간에 매핑(대조학습). 생성은 못 하지만 이후 모든 VLM의 "눈"이 됨</td></tr>
+  <tr><td class="num">BLIP-2 (2023)</td><td>얼려둔 ViT와 얼려둔 LLM을 Q-Former라는 어댑터로 연결 — "붙이면 된다"를 증명</td></tr>
+  <tr><td class="num">LLaVA (2023)</td><td>어댑터를 MLP 하나로 단순화 + GPT-4로 만든 instruction 데이터로 SFT. 오픈 VLM 표준 레시피 확립</td></tr>
+  <tr><td class="num">Qwen-VL 계열 (2023~)</td><td>dynamic resolution(이미지 해상도에 비례해 토큰 수 가변), M-RoPE. 현재 오픈 VLM 사실상의 표준 베이스</td></tr>
+</table>
+
+<h2>학습은 3단계</h2>
+<ol>
+  <li><b>Alignment pretraining</b> — 이미지-캡션 쌍 수억 장으로 projector(±비전 인코더)를 LLM에 정렬</li>
+  <li><b>Instruction tuning (SFT)</b> — "이미지-질문-답" 대화 데이터로 지시를 따르게 학습</li>
+  <li><b>Preference tuning (선택)</b> — DPO/RLHF로 선호 최적화</li>
+</ol>
+<div class="callout">
+  <b>이 프로젝트가 하는 일</b>: 이미 1·2단계를 거친 공개 모델(Qwen3-VL 등)을 가져와
+  2단계를 <strong>한국어 차트 도메인 데이터로 조금 더</strong>(QLoRA) 하는 것 = "도메인 적응".
+  채용 공고의 "멀티모달 VLM 최적화 및 도메인 적응(fine-tuning) 경험"이 정확히 이것.
+</div>
+
+<h2>왜 하필 차트가 어려운가</h2>
+<ul>
+  <li>픽셀 → 구조(축·눈금·범례·시리즈) → 수치 추론까지 <strong>다단계 해석</strong>이 필요</li>
+  <li>OCR + 공간 정렬("이 막대가 어느 라벨 것인가") + 산술이 동시에 요구됨</li>
+  <li>한국어 라벨과 단위(억, 조)는 영어 중심 학습 데이터에서 희소 → 개선 여지가 큰 지점
+      (실제로 <a href="../experiments/day1_zeroshot/report.md">Day 1 진단</a>에서 조→억 환산 10배 오류 발견)</li>
+</ul>
+
+<h2>용어 미니 사전</h2>
+<dl>
+  <dt>zero-shot</dt><dd>추가 학습 없이 사전학습된 모델 그대로 추론</dd>
+  <dt>SFT</dt><dd>Supervised Fine-Tuning. 정답이 있는 대화 데이터로 지도학습</dd>
+  <dt>LoRA / QLoRA</dt><dd>가중치 전체 대신 작은 저랭크 행렬만 학습하는 효율적 파인튜닝. QLoRA = 본체를 4bit 양자화해 메모리 절약 + LoRA</dd>
+  <dt>projector</dt><dd>비전 인코더 출력을 LLM 임베딩 공간으로 옮기는 변환기</dd>
+  <dt>dynamic resolution</dt><dd>이미지 크기에 따라 이미지 토큰 수가 달라지는 방식 (Qwen-VL 계열)</dd>
+  <dt>relaxed accuracy</dt><dd>수치 답변에 ±5% 오차를 허용하는 정답률. ChartQA 벤치마크의 표준 지표 — Day 3에서 구현한다</dd>
+</dl>
+
+</body>
+</html>

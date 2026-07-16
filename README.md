@@ -9,7 +9,7 @@
 
 ## 로드맵
 
-- [x] **Day 1** — VLM 개념 정리([docs/vlm-basics.md](docs/vlm-basics.md)), 환경 구축(uv), 한국어 차트 zero-shot 추론 및 실패 사례 수집
+- [x] **Day 1** — VLM 개념 정리([docs/vlm-basics.html](docs/vlm-basics.html)), 환경 구축(uv), 한국어 차트 zero-shot 추론 및 실패 사례 수집
 - [ ] **Day 2** — 한국어 합성 차트 데이터셋 구축 (5천~1만 QA쌍)
 - [ ] **Day 3** — 평가 하네스(relaxed accuracy) + zero-shot 베이스라인 측정
 - [ ] **Day 4** — LLaMA-Factory로 QLoRA SFT
