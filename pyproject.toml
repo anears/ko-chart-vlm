@@ -1,5 +1,5 @@
 [project]
-name = "vlm-lab"
+name = "ko-chart-vlm"
 version = "0.1.0"
 description = "한국어 차트 이해 VLM — 7일 사이드 프로젝트"
 readme = "README.md"
