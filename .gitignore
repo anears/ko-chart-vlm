@@ -13,5 +13,9 @@ __pycache__/
 wandb/
 outputs/
 
+# 합성 이미지는 시드로 재생성 가능 → git에는 QA json/manifest/샘플만 둔다
+data/synth/train/
+data/synth/val/
+
 # os
 .DS_Store

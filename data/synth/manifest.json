@@ -1,0 +1,73 @@
+{
+  "seed": 20260720,
+  "generator": "scripts/make_chart_dataset.py",
+  "date": "2026-07-20 13:21:06",
+  "elapsed_sec": 256.6,
+  "targets": {
+    "unit_convert_strict": "조↔억↔만 환산 (Day1 약점 #1)",
+    "no_label_ratio_goal": ">=0.5 (Day1 약점 #2)",
+    "narrow_compare + rank_kth": "순위/근소 비교 (Day1 약점 #2,#3)"
+  },
+  "train": {
+    "n_qa": 5107,
+    "n_charts": 1800,
+    "no_label_charts": 1003,
+    "no_label_ratio": 0.557,
+    "question_type": {
+      "narrow_compare": 1057,
+      "rank_kth": 884,
+      "argmax": 814,
+      "unit_convert": 687,
+      "cross_series": 626,
+      "value_read": 563,
+      "sum": 234,
+      "dual_trap": 194,
+      "diff": 48
+    },
+    "eval_type": {
+      "category": 3575,
+      "numeric_relaxed": 845,
+      "numeric_strict": 687
+    },
+    "chart_kind": {
+      "dense": 1361,
+      "bar": 1062,
+      "grouped": 601,
+      "stacked": 568,
+      "dual": 532,
+      "line": 519,
+      "pie": 464
+    }
+  },
+  "val": {
+    "n_qa": 564,
+    "n_charts": 200,
+    "no_label_charts": 104,
+    "no_label_ratio": 0.52,
+    "question_type": {
+      "narrow_compare": 114,
+      "argmax": 96,
+      "rank_kth": 92,
+      "unit_convert": 73,
+      "cross_series": 66,
+      "value_read": 66,
+      "dual_trap": 27,
+      "sum": 24,
+      "diff": 6
+    },
+    "eval_type": {
+      "category": 395,
+      "numeric_relaxed": 96,
+      "numeric_strict": 73
+    },
+    "chart_kind": {
+      "dense": 131,
+      "bar": 125,
+      "dual": 75,
+      "grouped": 63,
+      "line": 62,
+      "pie": 54,
+      "stacked": 54
+    }
+  }
+}
