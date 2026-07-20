@@ -58,11 +58,14 @@ def main() -> None:
     ap.add_argument("--model", default="Qwen/Qwen3-VL-8B-Instruct")
     ap.add_argument("--qa", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--limit", type=int, default=0, help="앞 N개만 추론(0=전체, smoke용)")
     args = ap.parse_args()
 
     out_dir = ROOT / args.out
     out_dir.mkdir(parents=True, exist_ok=True)
     qa_list = json.loads((ROOT / args.qa).read_text(encoding="utf-8"))
+    if args.limit:
+        qa_list = qa_list[:args.limit]
 
     model, processor, load_sec = load_model(args.model)
 
