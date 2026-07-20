@@ -10,7 +10,7 @@
 ## 로드맵
 
 - [x] **Day 1** — VLM 개념 정리([docs/vlm-basics.html](docs/vlm-basics.html)), 환경 구축(uv), 한국어 차트 zero-shot 추론 및 실패 사례 수집
-- [ ] **Day 2** — 한국어 합성 차트 데이터셋 구축 (5천~1만 QA쌍)
+- [x] **Day 2** — 한국어 합성 차트 데이터셋 구축 ([5,671 QA쌍](experiments/day2_dataset/report.md), Day 1 약점 3종 타깃)
 - [ ] **Day 3** — 평가 하네스(relaxed accuracy) + zero-shot 베이스라인 측정
 - [ ] **Day 4** — LLaMA-Factory로 QLoRA SFT
 - [ ] **Day 5** — 평가·오류 분석·ablation
@@ -34,7 +34,12 @@ uv sync                                   # 환경 재현 (python 3.11, uv.lock 
 uv run scripts/make_day1_charts.py        # Day 1 진단용 차트 8장 + QA 생성
 CUDA_VISIBLE_DEVICES=1 uv run scripts/run_zeroshot.py \
     --qa data/day1_charts/qa.json --out experiments/day1_zeroshot
+
+uv run scripts/make_chart_dataset.py --charts 2000 --val-frac 0.1  # Day 2 합성 데이터셋 재생성 (seed 고정)
 ```
+
+> Day 2 합성 이미지(`data/synth/train·val/`)는 용량이 커 git에 넣지 않는다.
+> 위 명령으로 seed에서 동일하게 재생성되며, QA json·manifest·샘플만 커밋되어 있다.
 
 ## 실험 이력 규칙
 
@@ -47,6 +52,7 @@ CUDA_VISIBLE_DEVICES=1 uv run scripts/run_zeroshot.py \
 | 날짜 | 실험 | 요약 |
 |---|---|---|
 | 2026-07-16 | [day1_zeroshot](experiments/day1_zeroshot/) | Qwen3-VL-8B 한국어 차트 16문항 zero-shot — **strict 75%**. 약점 3종 발견: 조→억 단위 환산(10배 오류), 라벨 없는 차트 정밀 판독·순위, 근소 차이 비교 |
+| 2026-07-20 | [day2_dataset](experiments/day2_dataset/) | 합성 차트 QA **5,671쌍**(train 5,107 + val 564) 생성. Day 1 약점 타깃: unit_convert 조→억 strict 687, 무라벨 차트 55.7% + rank_kth 884, narrow_compare 1,057. GT는 원본 데이터에서 계산 |
 
 ## 환경
 
