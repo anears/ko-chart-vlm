@@ -1,0 +1,109 @@
+{
+  "subset": "experiments/day4_qlora/smoke_val.json",
+  "n": 163,
+  "note": "동일 163문항 서브셋 · 동일 추론 하네스(run_zeroshot.py). baseline=Day3 base 모델, adapter=Day4 QLoRA.",
+  "overall": {
+    "base_acc": 0.472,
+    "adapter_acc": 0.963,
+    "delta": 0.491,
+    "base_correct": 77,
+    "adapter_correct": 157
+  },
+  "by_question_type": {
+    "unit_convert": {
+      "base_correct": 0,
+      "adapter_correct": 70,
+      "n": 73,
+      "base_acc": 0.0,
+      "adapter_acc": 0.959,
+      "delta": 0.959
+    },
+    "rank_kth": {
+      "base_correct": 6,
+      "adapter_correct": 11,
+      "n": 12,
+      "base_acc": 0.5,
+      "adapter_acc": 0.917,
+      "delta": 0.417
+    },
+    "dual_trap": {
+      "base_correct": 11,
+      "adapter_correct": 12,
+      "n": 12,
+      "base_acc": 0.917,
+      "adapter_acc": 1.0,
+      "delta": 0.083
+    },
+    "argmax": {
+      "base_correct": 11,
+      "adapter_correct": 12,
+      "n": 12,
+      "base_acc": 0.917,
+      "adapter_acc": 1.0,
+      "delta": 0.083
+    },
+    "sum": {
+      "base_correct": 10,
+      "adapter_correct": 12,
+      "n": 12,
+      "base_acc": 0.833,
+      "adapter_acc": 1.0,
+      "delta": 0.167
+    },
+    "cross_series": {
+      "base_correct": 11,
+      "adapter_correct": 11,
+      "n": 12,
+      "base_acc": 0.917,
+      "adapter_acc": 0.917,
+      "delta": 0.0
+    },
+    "value_read": {
+      "base_correct": 12,
+      "adapter_correct": 12,
+      "n": 12,
+      "base_acc": 1.0,
+      "adapter_acc": 1.0,
+      "delta": 0.0
+    },
+    "narrow_compare": {
+      "base_correct": 11,
+      "adapter_correct": 11,
+      "n": 12,
+      "base_acc": 0.917,
+      "adapter_acc": 0.917,
+      "delta": 0.0
+    },
+    "diff": {
+      "base_correct": 5,
+      "adapter_correct": 6,
+      "n": 6,
+      "base_acc": 0.833,
+      "adapter_acc": 1.0,
+      "delta": 0.167
+    }
+  },
+  "by_eval_type": {
+    "category": {
+      "base_correct": 50,
+      "adapter_correct": 57,
+      "n": 60,
+      "base_acc": 0.833,
+      "adapter_acc": 0.95
+    },
+    "numeric_relaxed": {
+      "base_correct": 27,
+      "adapter_correct": 30,
+      "n": 30,
+      "base_acc": 0.9,
+      "adapter_acc": 1.0
+    },
+    "numeric_strict": {
+      "base_correct": 0,
+      "adapter_correct": 70,
+      "n": 73,
+      "base_acc": 0.0,
+      "adapter_acc": 0.959
+    }
+  }
+}

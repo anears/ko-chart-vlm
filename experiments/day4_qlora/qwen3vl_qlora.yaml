@@ -1,0 +1,53 @@
+# Day 4 — Qwen3-VL-8B QLoRA SFT (한국어 차트 도메인 적응)
+# 실행: CUDA_VISIBLE_DEVICES=0 WANDB_PROJECT=ko-chart-vlm \
+#         .venv-train/bin/llamafactory-cli train experiments/day4_qlora/qwen3vl_qlora.yaml
+# baseline(Day3 val 70.2%, unit_convert 0%)을 넘기는 것이 목표.
+
+### model
+model_name_or_path: Qwen/Qwen3-VL-8B-Instruct
+trust_remote_code: true
+flash_attn: sdpa                      # fa2 미설치 → sdpa (안전)
+
+### method — QLoRA (4bit) on LLM decoder only
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target: all                      # LLM decoder 선형층 (q/k/v/o/gate/up/down)
+quantization_bit: 4                    # QLoRA — bnb nf4 + double quant
+quantization_method: bnb
+freeze_vision_tower: true              # ViT 동결
+freeze_multi_modal_projector: true     # merger 동결 → LLM만 학습(표준 레시피)
+
+### dataset
+dataset: ko_chart_train
+dataset_dir: data/sft
+template: qwen3_vl
+cutoff_len: 1536
+image_max_pixels: 802816               # 네이티브 605k↑ → 다운스케일 없음(차트 글자 보존)
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: experiments/day4_qlora/adapter
+overwrite_output_dir: true
+logging_steps: 5
+save_steps: 200
+save_total_limit: 2
+plot_loss: true
+report_to: wandb
+run_name: day4_qlora_r16
+
+### train
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8         # 유효 배치 16
+learning_rate: 1.0e-4
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+weight_decay: 0.01
+max_grad_norm: 1.0
+bf16: true
+seed: 20260721

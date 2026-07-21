@@ -22,12 +22,15 @@ ROOT = Path(__file__).resolve().parent.parent
 PROMPT_SUFFIX = "\n차트를 보고 한국어로 간결하게 답하세요."
 
 
-def load_model(model_id: str):
+def load_model(model_id: str, adapter: str | None = None):
     t0 = time.time()
     processor = AutoProcessor.from_pretrained(model_id)
     model = AutoModelForImageTextToText.from_pretrained(
         model_id, dtype=torch.bfloat16, device_map="cuda"
     )
+    if adapter:  # Day 4~: base 위에 QLoRA/LoRA 어댑터를 얹어 파인튜닝 결과를 평가
+        from peft import PeftModel
+        model = PeftModel.from_pretrained(model, adapter)
     model.eval()
     return model, processor, time.time() - t0
 
@@ -56,6 +59,7 @@ def answer(model, processor, image_path: Path, question: str) -> tuple[str, floa
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="Qwen/Qwen3-VL-8B-Instruct")
+    ap.add_argument("--adapter", default=None, help="PEFT 어댑터 경로(지정 시 base 위에 로드). 미지정 시 zero-shot")
     ap.add_argument("--qa", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--limit", type=int, default=0, help="앞 N개만 추론(0=전체, smoke용)")
@@ -67,7 +71,7 @@ def main() -> None:
     if args.limit:
         qa_list = qa_list[:args.limit]
 
-    model, processor, load_sec = load_model(args.model)
+    model, processor, load_sec = load_model(args.model, args.adapter)
 
     results = []
     for i, item in enumerate(qa_list, start=1):
@@ -81,6 +85,7 @@ def main() -> None:
 
     meta = {
         "model": args.model,
+        "adapter": args.adapter,
         "dtype": "bfloat16",
         "decoding": "greedy, max_new_tokens=96",
         "gpu": torch.cuda.get_device_name(0),

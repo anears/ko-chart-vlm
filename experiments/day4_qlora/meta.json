@@ -1,0 +1,51 @@
+{
+  "day": 4,
+  "task": "QLoRA SFT (Qwen3-VL-8B, 한국어 차트 도메인 적응)",
+  "date": "2026-07-21",
+  "framework": "LLaMA-Factory (git main) — 전용 venv(.venv-train)",
+  "base_model": "Qwen/Qwen3-VL-8B-Instruct",
+  "base_commit": "d8ce8c0",
+  "wandb_run": "https://wandb.ai/anears-vuno/ko-chart-vlm/runs/yq0kja5c",
+  "config": "experiments/day4_qlora/qwen3vl_qlora.yaml",
+  "train_data": "data/synth/train.json → ShareGPT (5,107 QA, scripts/to_sharegpt.py)",
+  "hparams": {
+    "method": "QLoRA 4bit (bnb nf4)",
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "lora_target": "all (LLM decoder)",
+    "freeze_vision_tower": true,
+    "freeze_multi_modal_projector": true,
+    "template": "qwen3_vl",
+    "cutoff_len": 1536,
+    "image_max_pixels": 802816,
+    "epochs": 3,
+    "eff_batch": 16,
+    "lr": 0.0001,
+    "scheduler": "cosine",
+    "warmup_ratio": 0.05,
+    "seed": 20260721
+  },
+  "trainable_params": "43,646,976 / 8,810,770,672 (0.495%)",
+  "train_result": {
+    "steps": 960,
+    "train_loss": 0.1491,
+    "train_runtime_sec": 6074,
+    "train_runtime_hms": "1:41:14",
+    "samples_per_sec": 2.522
+  },
+  "gpu": "RTX 4090 ×1 (CUDA_VISIBLE_DEVICES=0, NCCL_P2P/IB_DISABLE=1)",
+  "eval_peak_vram_gb": 18.65,
+  "smoke_eval": {
+    "subset_n": 163,
+    "base_acc": 0.472,
+    "adapter_acc": 0.963,
+    "delta_pp": 49.1,
+    "unit_convert": "0/73 → 70/73"
+  },
+  "env": {
+    "torch": "2.13.0+cu126",
+    "transformers": "5.8.0"
+  },
+  "note_thinking": "SFT 후 예측은 빈 <think></think> 블록 + 정답 형태(Qwen3-VL non-thinking 포맷). 답 추출·채점에 영향 없음."
+}
