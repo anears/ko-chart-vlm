@@ -33,5 +33,12 @@ experiments/*/adapter*/chat_template.jinja
 experiments/*/adapter*/processor_config.json
 experiments/*/adapter*/*.bin
 
+# Day 6 서빙 전용 venv + 병합/양자화 모델 (대용량, export.yaml로 재생성 가능)
+.venv-serve/
+experiments/day6_serving/merged/
+experiments/day6_serving/*awq*/
+
 # os
 .DS_Store
+.venv-quant/
+experiments/day6_serving/*-awq/

@@ -1,0 +1,11 @@
+# Day 6 — day4 QLoRA 어댑터를 base에 병합해 단일 모델로 export (vLLM 서빙용)
+model_name_or_path: Qwen/Qwen3-VL-8B-Instruct
+adapter_name_or_path: experiments/day4_qlora/adapter
+template: qwen3_vl
+trust_remote_code: true
+finetuning_type: lora
+
+export_dir: experiments/day6_serving/merged
+export_size: 5
+export_device: auto
+export_legacy_format: false

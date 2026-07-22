@@ -1,0 +1,24 @@
+Day 6 데모 검증 — base vs 파인튜닝 (vLLM 서빙, greedy)
+두 서버: base(8000, 원본 Qwen3-VL-8B) / finetuned(8001, Day4 QLoRA 병합)
+프롬프트: 질문 + "\n차트를 보고 한국어로 간결하게 답하세요." (run_zeroshot와 동일)
+
+[시연1] data/day1_charts/07_units_krw.png — 조→억 단위 환산 (GT 8,500억)
+  base      : 850억 원      (×10^4 누락, 10배 과소 — Day1 진단과 동일)
+  finetuned : 8,500억 원    ✓ 정답 (환산 수행)
+
+[시연2] data/synth/val/00007.png — 누적합계 조→억 (GT 150,000억)
+  base      : 15억 원       (환산 시도 안 함)
+  finetuned : 60,000억 원   (환산은 하나 값 판독 오류 — 서빙 전처리 스큐)
+
+[시연3] data/day1_charts/08_bar_dense.png — 무라벨 조밀 순위 (GT 부산)
+  base      : 대구
+  finetuned : 인천          (조밀 차트 near-tie, 서빙 경로에서 판독 흔들림)
+
+── 서빙 정확도 정량화 (val unit_convert 12문항, 동일 하네스 채점) ──
+  base      : 0/12  (원본은 환산 자체를 안 함)
+  finetuned : 3/12 (25%)   ← 오프라인 평가(transformers) 96% 대비 큰 격차
+
+핵심: 동일 이미지·동일 병합 가중치인데 transformers는 150,000억(정답),
+vLLM은 60,000억(오답). 단위 환산 *동작*은 서빙에 전이되나(finetuned는 환산,
+base는 안 함), 조밀 차트 값 *판독*은 전처리 경로 차이로 저하.
+원인: 평가=qwen_vl_utils(factor 28) vs 서빙=vLLM Qwen3-VL 프로세서(patch16/factor 32).

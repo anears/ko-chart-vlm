@@ -1,0 +1,44 @@
+{
+  "day": 6,
+  "task": "vLLM 서빙 + Gradio 데모 + AWQ 경량화",
+  "date": "2026-07-22",
+  "base_commit": "4358bb3",
+  "serving_stack": {
+    "venv": ".venv-serve (격리)",
+    "vllm": "0.11.0",
+    "torch": "2.8.0+cu128",
+    "transformers": "4.57.6",
+    "note": "driver 535=CUDA 12.2 → cu128 핀(CUDA 12 minor 호환). 최신 vLLM(cu130)은 구동 불가."
+  },
+  "merged_model": "experiments/day6_serving/merged (bf16, 17GB, llamafactory export 병합)",
+  "servers": {
+    "base": "GPU0:8000 Qwen/Qwen3-VL-8B-Instruct",
+    "finetuned": "GPU1:8001 병합 모델 (멀티모달 서빙 OK)",
+    "finetuned-awq": "GPU3:8002 W4A16 (텍스트 OK, 멀티모달 차단)"
+  },
+  "server_args": "--max-model-len 3072 --max-num-seqs 4 --enforce-eager --gpu-memory-utilization 0.95, NCCL_P2P/IB_DISABLE=1",
+  "demo": "scripts/serve_demo.py (Gradio, base|finetuned 좌우 비교, --smoke 헤드리스)",
+  "demo_highlight": "Day1 07 조→억: base 850억(×10^4 누락) → finetuned 8,500억 ✓",
+  "train_serve_skew": {
+    "finding": "동일 이미지·가중치, transformers=150,000억(정답) vs vLLM=60,000억(오답)",
+    "served_unit_convert_acc": "~25% (3/12)",
+    "offline_eval_acc": "96%",
+    "cause": "이미지 전처리 경로 불일치 — 평가 qwen_vl_utils(factor 28) vs 서빙 vLLM Qwen3-VL 프로세서(patch16/factor 32)"
+  },
+  "awq": {
+    "tool": "llmcompressor 0.12.0 W4A16, language_model만 (visual/merger/lm_head 제외)",
+    "footprint": "17GB → 6.8GB (~2.5x)",
+    "text_inference": "정상 (1조=10,000억 정확)",
+    "multimodal_serving": "차단 — vLLM 0.11 compressed-tensors Qwen3-VL 이미지 처리 400 오류",
+    "fallback": "bf16 finetuned 서버가 실 멀티모달 경로"
+  },
+  "infra_issues_resolved": [
+    "cu130/driver535 비호환 → vllm 0.11 + cu128 핀",
+    "transformers 5.14 tokenizer API 제거 → 4.57.6",
+    "병합/AWQ 모델 5.x tokenizer 포맷 → base 원본으로 교체",
+    "KV cache OOM → max-model-len/num-seqs/util 튜닝",
+    "EngineCore 고아 프로세스 GPU 점유 → PID 직접 종료",
+    "AWQ config scale_dtype/zp_dtype → vLLM 0.11 스키마 맞춰 제거"
+  ],
+  "gpu": "RTX 4090 ×8 중 GPU0/1/3 사용, driver 535.183"
+}

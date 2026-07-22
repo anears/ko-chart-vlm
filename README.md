@@ -14,7 +14,7 @@
 - [x] **Day 3** — 평가 하네스 + zero-shot 베이스라인 ([val 564문항 70.2%](experiments/day3_baseline/report.md), 단위환산 0%)
 - [x] **Day 4** — LLaMA-Factory QLoRA SFT ([스모크 163문항 47.2%→96.3%](experiments/day4_qlora/report.md), **unit_convert 0%→96%**)
 - [x] **Day 5** — 평가·오류분석·ablation ([val 564 **70.2%→96.6%**](experiments/day5_eval/report.md), OOD 일반화 한계 규명, 1ep≈3ep)
-- [ ] **Day 6** — vLLM 서빙 + Gradio 데모 (+AWQ 양자화)
+- [x] **Day 6** — vLLM 서빙 + Gradio 데모 (base vs 파인튜닝) + [AWQ 경량화](experiments/day6_serving/report.md) (17GB→6.8GB). **train/serve 전처리 스큐** 규명
 - [ ] **Day 7** — 결과 정리, README/블로그
 
 ## 저장소 구조
@@ -69,6 +69,7 @@ CUDA_VISIBLE_DEVICES=0 NCCL_P2P_DISABLE=1 NCCL_IB_DISABLE=1 WANDB_PROJECT=ko-cha
 | 2026-07-20 | [day3_baseline](experiments/day3_baseline/) | 평가 하네스(`eval.py`, selftest 20/20) + val 564문항 zero-shot **70.2%**. **unit_convert 0/73**(조→억 환산 완전 실패), rank_kth dense 41%, narrow_compare 79%. 무라벨 읽기는 91%로 견고 → Day 1 약점 #2는 '읽기'가 아니라 '순위'로 정밀화 |
 | 2026-07-21 | [day4_qlora](experiments/day4_qlora/) | LLaMA-Factory **QLoRA**(4bit, r16, LLM 디코더만, 43.6M/0.5%) 3 epoch, 1h41m. 스모크 163문항 **47.2%→96.3%(+49.1%p)**. **unit_convert 0%→96%**(조→억 환산 해결, 잔여 오답 3건은 환산이 아닌 무라벨 판독 오차), rank_kth 50%→92%. 잔여 약점은 근소 비교·조밀 순위의 지각 경계 사례 |
 | 2026-07-22 | [day5_eval](experiments/day5_eval/) | 정식 val 564 **70.2%→96.6%(+26.4%p)**: unit_convert 0%→96%, rank_kth 57%→95%, narrow_compare 79%→96%. 잔여 오답 19건은 대부분 조밀·누적 차트 near-tie 시지각. **Day1 진단셋(OOD) 75%→81%**로 이득이 부분 전이 — 단위환산이 10배 과소→10배 과대로 반전(**합성 렌더링 과적합**). ablation: **1 epoch가 3 epoch의 ~99%(95.7 vs 96.6%)를 1/3 시간에**, OOD 과적합 페널티 없음 |
+| 2026-07-22 | [day6_serving](experiments/day6_serving/) | 어댑터 병합 → **vLLM 2서버(base/finetuned) 서빙** + Gradio 비교 데모([serve_demo.py](scripts/serve_demo.py)). 라이브: base 850억→finetuned 8,500억(조→억). **AWQ W4A16 17GB→6.8GB(~2.5x)**, 텍스트 추론 정상이나 멀티모달 서빙은 구버전 vLLM 제약으로 차단(폴백 bf16). **핵심 발견: train/serve 전처리 스큐** — 동일 입력에 transformers 96% vs vLLM 25%(qwen_vl_utils factor28 vs vLLM factor32). driver 535→cu128→vllm 0.11 버전 정합 이슈 다수 해결 |
 
 ## 환경
 
