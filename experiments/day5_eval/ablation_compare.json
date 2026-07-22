@@ -1,0 +1,27 @@
+{
+  "note": "동일 설정, epoch만 1 vs 3",
+  "epoch1": {
+    "val_acc": 0.957,
+    "val_correct": 540,
+    "day1_acc": 0.75,
+    "train_runtime": "0:34:55",
+    "train_loss": 0.2819,
+    "val_by_type": {
+      "unit_convert": 0.973,
+      "rank_kth": 0.924,
+      "narrow_compare": 0.939
+    }
+  },
+  "epoch3": {
+    "val_acc": 0.966,
+    "val_correct": 545,
+    "day1_acc": 0.812,
+    "train_runtime": "1:41:14",
+    "train_loss": 0.1491,
+    "val_by_type": {
+      "unit_convert": 0.959,
+      "rank_kth": 0.946,
+      "narrow_compare": 0.956
+    }
+  }
+}

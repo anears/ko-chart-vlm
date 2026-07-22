@@ -1,0 +1,44 @@
+# Day 5 ablation — Day4 설정과 동일, epoch만 3→1 (빠른 수렴 가설 검증)
+model_name_or_path: Qwen/Qwen3-VL-8B-Instruct
+trust_remote_code: true
+flash_attn: sdpa
+
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target: all
+quantization_bit: 4
+quantization_method: bnb
+freeze_vision_tower: true
+freeze_multi_modal_projector: true
+
+dataset: ko_chart_train
+dataset_dir: data/sft
+template: qwen3_vl
+cutoff_len: 1536
+image_max_pixels: 802816
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+output_dir: experiments/day5_eval/adapter_1ep
+overwrite_output_dir: true
+logging_steps: 5
+save_steps: 1000
+save_total_limit: 1
+plot_loss: true
+report_to: wandb
+run_name: day5_qlora_1ep
+
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8
+learning_rate: 1.0e-4
+num_train_epochs: 1.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+weight_decay: 0.01
+max_grad_norm: 1.0
+bf16: true
+seed: 20260721

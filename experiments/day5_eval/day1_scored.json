@@ -1,0 +1,176 @@
+{
+  "n": 16,
+  "base_correct": 12,
+  "adapter_correct": 13,
+  "base_acc": 0.75,
+  "adapter_acc": 0.812,
+  "unit_convert_07q1": {
+    "gt": "8,500억 원",
+    "base": "850억 원",
+    "adapter": "85,000억 원",
+    "base_ok": false,
+    "adapter_ok": false
+  },
+  "rows": [
+    {
+      "id": "01-q1",
+      "kind": "value_read",
+      "eval_type": "numeric_relaxed",
+      "gt": "180억 원",
+      "base_pred": "180억 원",
+      "base_ok": true,
+      "adapter_pred": "180억 원",
+      "adapter_ok": true
+    },
+    {
+      "id": "01-q2",
+      "kind": "argmax",
+      "eval_type": "category",
+      "gt": "2024년",
+      "base_pred": "2024년",
+      "base_ok": true,
+      "adapter_pred": "2024",
+      "adapter_ok": true
+    },
+    {
+      "id": "02-q1",
+      "kind": "value_read",
+      "eval_type": "numeric_relaxed",
+      "gt": "45천 대 (4만 5천 대)",
+      "base_pred": "45천 대",
+      "base_ok": true,
+      "adapter_pred": "45천 대",
+      "adapter_ok": true
+    },
+    {
+      "id": "02-q2",
+      "kind": "narrow_compare",
+      "eval_type": "category",
+      "gt": "2분기",
+      "base_pred": "3분기",
+      "base_ok": false,
+      "adapter_pred": "3분기",
+      "adapter_ok": false
+    },
+    {
+      "id": "03-q1",
+      "kind": "value_read",
+      "eval_type": "numeric_relaxed",
+      "gt": "18°C",
+      "base_pred": "18°C",
+      "base_ok": true,
+      "adapter_pred": "18°C",
+      "adapter_ok": true
+    },
+    {
+      "id": "03-q2",
+      "kind": "cross_series",
+      "eval_type": "category",
+      "gt": "제주",
+      "base_pred": "제주",
+      "base_ok": true,
+      "adapter_pred": "제주",
+      "adapter_ok": true
+    },
+    {
+      "id": "04-q1",
+      "kind": "argmax",
+      "eval_type": "category",
+      "gt": "A전자, 34%",
+      "base_pred": "A전자, 34%",
+      "base_ok": true,
+      "adapter_pred": "A전자, 34%",
+      "adapter_ok": true
+    },
+    {
+      "id": "04-q2",
+      "kind": "sum",
+      "eval_type": "numeric_relaxed",
+      "gt": "45%",
+      "base_pred": "45%",
+      "base_ok": true,
+      "adapter_pred": "45%",
+      "adapter_ok": true
+    },
+    {
+      "id": "05-q1",
+      "kind": "sum",
+      "eval_type": "numeric_relaxed",
+      "gt": "24조 원",
+      "base_pred": "24 조 원",
+      "base_ok": true,
+      "adapter_pred": "24조 원",
+      "adapter_ok": true
+    },
+    {
+      "id": "05-q2",
+      "kind": "argmax",
+      "eval_type": "category",
+      "gt": "2023년",
+      "base_pred": "2023년",
+      "base_ok": true,
+      "adapter_pred": "2023",
+      "adapter_ok": true
+    },
+    {
+      "id": "06-q1",
+      "kind": "dual_trap",
+      "eval_type": "category",
+      "gt": "2023년 (12.4%)",
+      "base_pred": "2023년",
+      "base_ok": true,
+      "adapter_pred": "2023",
+      "adapter_ok": true
+    },
+    {
+      "id": "06-q2",
+      "kind": "value_read",
+      "eval_type": "numeric_relaxed",
+      "gt": "1,010억 원",
+      "base_pred": "1010억 원",
+      "base_ok": true,
+      "adapter_pred": "1,010억 원",
+      "adapter_ok": true
+    },
+    {
+      "id": "07-q1",
+      "kind": "unit_convert",
+      "eval_type": "numeric_strict",
+      "gt": "8,500억 원",
+      "base_pred": "850억 원",
+      "base_ok": false,
+      "adapter_pred": "85,000억 원",
+      "adapter_ok": false
+    },
+    {
+      "id": "07-q2",
+      "kind": "sum",
+      "eval_type": "numeric_relaxed",
+      "gt": "2.98조 원",
+      "base_pred": "3.03조 원입니다.",
+      "base_ok": true,
+      "adapter_pred": "2.68조 원",
+      "adapter_ok": false
+    },
+    {
+      "id": "08-q1",
+      "kind": "value_read",
+      "eval_type": "numeric_relaxed",
+      "gt": "약 110만 명",
+      "base_pred": "약 100만 명",
+      "base_ok": false,
+      "adapter_pred": "110만 명",
+      "adapter_ok": true
+    },
+    {
+      "id": "08-q2",
+      "kind": "rank_kth",
+      "eval_type": "category",
+      "gt": "부산",
+      "base_pred": "대구",
+      "base_ok": false,
+      "adapter_pred": "부산",
+      "adapter_ok": true
+    }
+  ]
+}

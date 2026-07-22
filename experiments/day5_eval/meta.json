@@ -1,0 +1,56 @@
+{
+  "day": 5,
+  "task": "파인튜닝 평가·오류분석·ablation",
+  "date": "2026-07-22",
+  "adapter_evaluated": "experiments/day4_qlora/adapter (QLoRA 3ep)",
+  "harness": "scripts/eval.py (Day3 동일) + run_zeroshot.py --adapter",
+  "val564": {
+    "base_acc": 0.702,
+    "adapter_acc": 0.966,
+    "delta_pp": 26.4,
+    "highlights": {
+      "unit_convert": "0%→96%",
+      "rank_kth": "57%→95%",
+      "narrow_compare": "79%→96%"
+    }
+  },
+  "day1_ood": {
+    "n": 16,
+    "base": 0.75,
+    "adapter": 0.812,
+    "finding": "합성 렌더링 과적합 — unit_convert 07-q1이 base 10배 과소(850억)→adapter 10배 과대(85,000억)로 방향만 반전. 조밀순위·무라벨판독은 OOD 일반화됨."
+  },
+  "residual_errors_val": {
+    "n": 19,
+    "clusters": "거의 전부 조밀·누적 차트 near-tie 시지각(rank/narrow/cross) + unit_convert 판독 3 + 라벨오독 1"
+  },
+  "ablation_epoch": {
+    "epoch1": {
+      "val_acc": 0.957,
+      "val_correct": 540,
+      "day1_acc": 0.75,
+      "train_runtime": "0:34:55",
+      "train_loss": 0.2819,
+      "val_by_type": {
+        "unit_convert": 0.973,
+        "rank_kth": 0.924,
+        "narrow_compare": 0.939
+      }
+    },
+    "epoch3": {
+      "val_acc": 0.966,
+      "val_correct": 545,
+      "day1_acc": 0.812,
+      "train_runtime": "1:41:14",
+      "train_loss": 0.1491,
+      "val_by_type": {
+        "unit_convert": 0.959,
+        "rank_kth": 0.946,
+        "narrow_compare": 0.956
+      }
+    },
+    "conclusion": "1 epoch가 3 epoch의 ~99%(95.7 vs 96.6%)를 1/3 시간에. unit_convert는 1ep에 완성. 3ep OOD 페널티 없음. OOD 단위환산 실패는 1·3ep 동일→분포이동."
+  },
+  "gpu": "RTX 4090 (평가 GPU0, 1ep 학습 GPU1 병렬)",
+  "note_infra": "대용량 모델 다중 동시 로드 시 NFS I/O 경합으로 D-state 멈춤 발생 → 순차 로드로 해결"
+}

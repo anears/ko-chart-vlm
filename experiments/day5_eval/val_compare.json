@@ -1,0 +1,65 @@
+{
+  "n": 564,
+  "base_acc": 0.702,
+  "adapter_acc": 0.966,
+  "delta_pp": 26.4,
+  "by_question_type": {
+    "rank_kth": {
+      "base": 0.565,
+      "adapter": 0.946,
+      "n": 92
+    },
+    "narrow_compare": {
+      "base": 0.789,
+      "adapter": 0.956,
+      "n": 114
+    },
+    "dual_trap": {
+      "base": 0.889,
+      "adapter": 1.0,
+      "n": 27
+    },
+    "argmax": {
+      "base": 0.917,
+      "adapter": 0.958,
+      "n": 96
+    },
+    "cross_series": {
+      "base": 0.833,
+      "adapter": 0.97,
+      "n": 66
+    },
+    "sum": {
+      "base": 0.875,
+      "adapter": 1.0,
+      "n": 24
+    },
+    "diff": {
+      "base": 0.833,
+      "adapter": 1.0,
+      "n": 6
+    },
+    "unit_convert": {
+      "base": 0.0,
+      "adapter": 0.959,
+      "n": 73
+    },
+    "value_read": {
+      "base": 0.924,
+      "adapter": 1.0,
+      "n": 66
+    }
+  },
+  "by_labeled": {
+    "unlabeled": {
+      "base": 0.709,
+      "adapter": 0.962,
+      "n": 292
+    },
+    "labeled": {
+      "base": 0.695,
+      "adapter": 0.971,
+      "n": 272
+    }
+  }
+}

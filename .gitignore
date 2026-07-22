@@ -24,13 +24,14 @@ data/synth/val/
 data/sft/train_sharegpt.json
 
 # 학습 중간 체크포인트(옵티마이저 상태 등 대용량) — 최종 어댑터 config/log만 커밋
-experiments/*/adapter/checkpoint-*/
+# adapter/·adapter_1ep/ 등 어댑터 산출 디렉토리 전부 커버
+experiments/*/adapter*/checkpoint-*/
 # 어댑터 산출물 중 base 모델과 중복되는 토크나이저·프로세서·바이너리 제외
 #   → adapter_config.json·trainer_state·loss curve 등 소형 문서만 커밋
-experiments/*/adapter/tokenizer*.json
-experiments/*/adapter/chat_template.jinja
-experiments/*/adapter/processor_config.json
-experiments/*/adapter/*.bin
+experiments/*/adapter*/tokenizer*.json
+experiments/*/adapter*/chat_template.jinja
+experiments/*/adapter*/processor_config.json
+experiments/*/adapter*/*.bin
 
 # os
 .DS_Store

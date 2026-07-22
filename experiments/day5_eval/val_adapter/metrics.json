@@ -1,0 +1,118 @@
+{
+  "n": 564,
+  "accuracy": 0.966,
+  "n_correct": 545,
+  "by_eval_type": {
+    "category": {
+      "n": 395,
+      "correct": 379,
+      "acc": 0.959
+    },
+    "numeric_relaxed": {
+      "n": 96,
+      "correct": 96,
+      "acc": 1.0
+    },
+    "numeric_strict": {
+      "n": 73,
+      "correct": 70,
+      "acc": 0.959
+    }
+  },
+  "by_question_type": {
+    "narrow_compare": {
+      "n": 114,
+      "correct": 109,
+      "acc": 0.956
+    },
+    "argmax": {
+      "n": 96,
+      "correct": 92,
+      "acc": 0.958
+    },
+    "rank_kth": {
+      "n": 92,
+      "correct": 87,
+      "acc": 0.946
+    },
+    "unit_convert": {
+      "n": 73,
+      "correct": 70,
+      "acc": 0.959
+    },
+    "cross_series": {
+      "n": 66,
+      "correct": 64,
+      "acc": 0.97
+    },
+    "value_read": {
+      "n": 66,
+      "correct": 66,
+      "acc": 1.0
+    },
+    "dual_trap": {
+      "n": 27,
+      "correct": 27,
+      "acc": 1.0
+    },
+    "sum": {
+      "n": 24,
+      "correct": 24,
+      "acc": 1.0
+    },
+    "diff": {
+      "n": 6,
+      "correct": 6,
+      "acc": 1.0
+    }
+  },
+  "by_labeled": {
+    "unlabeled": {
+      "n": 292,
+      "correct": 281,
+      "acc": 0.962
+    },
+    "labeled": {
+      "n": 272,
+      "correct": 264,
+      "acc": 0.971
+    }
+  },
+  "by_chart_kind": {
+    "dense": {
+      "n": 131,
+      "correct": 121,
+      "acc": 0.924
+    },
+    "bar": {
+      "n": 125,
+      "correct": 123,
+      "acc": 0.984
+    },
+    "dual": {
+      "n": 75,
+      "correct": 75,
+      "acc": 1.0
+    },
+    "grouped": {
+      "n": 63,
+      "correct": 63,
+      "acc": 1.0
+    },
+    "line": {
+      "n": 62,
+      "correct": 62,
+      "acc": 1.0
+    },
+    "pie": {
+      "n": 54,
+      "correct": 51,
+      "acc": 0.944
+    },
+    "stacked": {
+      "n": 54,
+      "correct": 50,
+      "acc": 0.926
+    }
+  }
+}
