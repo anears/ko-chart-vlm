@@ -2,7 +2,7 @@
 
 이 글의 전문은 개인 사이트로 옮겼습니다.
 
-**→ [anears.github.io/projects/ko-chart-vlm](https://anears.github.io/projects/ko-chart-vlm/)**
+**→ [anears.github.io/blog/2026/ko-chart-vlm](https://anears.github.io/blog/2026/ko-chart-vlm/)**
 
 > 오픈소스 VLM(Qwen3-VL-8B)이 한국어 차트를 얼마나 읽는지 숫자로 측정하고,
 > 약점을 겨냥한 합성 데이터로 QLoRA 파인튜닝해 **val 70.2% → 96.6%(+26.4%p)**,
