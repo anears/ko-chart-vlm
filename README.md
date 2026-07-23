@@ -7,6 +7,23 @@
 > ① 도메인 파인튜닝(SFT/LoRA) ② 데이터 구축 ③ 평가 벤치마크 설계 ④ vLLM 서빙/경량화 —
 > 이 프로젝트는 네 가지를 전부 커버하도록 설계했다.
 
+## 결과 요약 (TL;DR)
+
+7일간 **진단 → 데이터 → 파인튜닝 → 평가 → 서빙**의 풀사이클을 돌려, Qwen3-VL-8B의
+한국어 차트 이해를 정량적으로 끌어올렸다. 서술형 정리는 **[블로그 글](docs/blog.md)** 참고.
+
+| 지표 (val 564문항, 동일 하네스) | zero-shot | QLoRA | Δ |
+|---|---|---|---|
+| **전체 정확도** | 70.2% | **96.6%** | **+26.4%p** |
+| unit_convert (조→억 환산) | **0%** | **96%** | +96%p |
+| rank_kth (조밀 차트 순위) | 57% | 95% | +38%p |
+| narrow_compare (근소 비교) | 79% | 96% | +17%p |
+
+**핵심 발견 3가지**
+1. **한국어 단위 체계 공백을 데이터로 메웠다** — 영어권 학습 모델이 못하던 `1조=10,000억` 환산이 0%→96%. 잔여 오답은 산술이 아니라 무라벨 차트 값 *판독* 오차.
+2. **합성 SFT는 렌더링 분포에 과적합한다** — 합성 val 96%가 분포 밖(Day 1 수기 차트)으론 부분 전이(75%→81%). 단위환산 오류가 10배 과소→10배 과대로 *방향만* 반전.
+3. **오프라인 정확도 ≠ 서빙 정확도 (train/serve preprocessing skew)** — 동일 이미지·가중치인데 transformers 96% vs vLLM 25%. 원인은 이미지 리사이즈 그리드 차이(qwen_vl_utils factor 28 vs vLLM 프로세서 factor 32).
+
 ## 로드맵
 
 - [x] **Day 1** — VLM 개념 정리([docs/vlm-basics.html](docs/vlm-basics.html)), 환경 구축(uv), 한국어 차트 zero-shot 추론 및 실패 사례 수집
@@ -15,7 +32,7 @@
 - [x] **Day 4** — LLaMA-Factory QLoRA SFT ([스모크 163문항 47.2%→96.3%](experiments/day4_qlora/report.md), **unit_convert 0%→96%**)
 - [x] **Day 5** — 평가·오류분석·ablation ([val 564 **70.2%→96.6%**](experiments/day5_eval/report.md), OOD 일반화 한계 규명, 1ep≈3ep)
 - [x] **Day 6** — vLLM 서빙 + Gradio 데모 (base vs 파인튜닝) + [AWQ 경량화](experiments/day6_serving/report.md) (17GB→6.8GB). **train/serve 전처리 스큐** 규명
-- [ ] **Day 7** — 결과 정리, README/블로그
+- [x] **Day 7** — 결과 정리, README 최종본 + [블로그 글](docs/blog.md)
 
 ## 저장소 구조
 
@@ -58,7 +75,7 @@ CUDA_VISIBLE_DEVICES=0 NCCL_P2P_DISABLE=1 NCCL_IB_DISABLE=1 WANDB_PROJECT=ko-cha
 
 - 실험 1건 = `experiments/<이름>/` 디렉토리 1개 (결과 jsonl + meta.json + report.md)
 - 실험 완료 시점에 `exp(<이름>): ...` 커밋으로 코드·데이터·결과를 함께 고정
-- 학습 실험(Day 4~)은 wandb 로깅 병행 예정
+- 학습 실험(Day 4~)은 wandb 로깅 병행 ([ko-chart-vlm 프로젝트](https://wandb.ai/anears-vuno/ko-chart-vlm))
 
 ## 실험 로그
 
